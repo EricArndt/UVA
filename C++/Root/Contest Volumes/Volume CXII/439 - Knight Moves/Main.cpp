@@ -5,7 +5,7 @@
 
 using namespace std;
 
-vector< vector<int> > floyd(vector< vector<int> > matrix) {
+vector< vector<int> > floyd(vector< vector<int> >& matrix) {
 	
 	const int I = INT_MAX;
 	
@@ -25,7 +25,6 @@ vector< vector<int> > floyd(vector< vector<int> > matrix) {
 }
 
 int main() {
-	
 	vector< vector<int> > board (64, vector <int> (64, INT_MAX));	
 
 	int UR = 17;
