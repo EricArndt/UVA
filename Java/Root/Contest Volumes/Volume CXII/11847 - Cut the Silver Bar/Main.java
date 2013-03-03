@@ -12,13 +12,11 @@ public class Main {
             }
             
             int cuts = 0;
-            int day = 1;
             
-            while (n > 1 && day < n) {
+            while (n > 1 ) {
                 ++cuts;
                 
-                n -= day;
-                ++day;
+                n /= 2;
             }
             
             System.out.println(cuts);
