@@ -5,16 +5,13 @@ public class Main {
     static final int TIME = 280;
     static final int PEOPLE = 3;
     static Problem[][] probs;
-    static int[][][] grid;
+    static int[][][] grid = new int[(int)Math.pow(2, 12)][TIME + 1][3];;
     static int n;
     
     public static void main (String[] args) {     
         Scanner s = new Scanner(System.in);
            
         int c = s.nextInt();
-        
-        final int totalSets = (int)Math.pow(2, 12);
-        grid = new int[totalSets][TIME + 1][3];
         
         for (int cases = 0; cases < c; ++cases) {
             n = s.nextInt();
