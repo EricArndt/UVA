@@ -4,7 +4,6 @@ public class Main {
     static int currentSets;
     static final int TIME = 280;
     static final int PEOPLE = 3;
-    static int[] setMap;
     static Problem[][] probs;
     static int[][][] grid;
     static int n;
@@ -21,8 +20,6 @@ public class Main {
             n = s.nextInt();
             
             currentSets = (int)Math.pow(2, n);
-            int fastestPerson = 0;
-            int fastestTime = Integer.MAX_VALUE;
             
             probs = new Problem[PEOPLE][n];
             
@@ -31,10 +28,6 @@ public class Main {
                 
                 for (int j = 0; j < n; ++j) {
                     probs[i][j] = new Problem(j, s.nextInt());
-                    if (probs[i][j].time < fastestTime) {
-                        fastestPerson = i;
-                        fastestTime = probs[i][j].time;
-                    }
                 }
                 
                 Arrays.sort(probs[i]);
@@ -56,11 +49,6 @@ public class Main {
     }
     
     static int recursiveDP(int set, int time ,int solver) {
-        // we're outside the bounds
-        if (set < 0 || time < 0) {
-            return 0;
-        }
-        
         // we already calculated it
         if (grid[set][time][solver] != Integer.MIN_VALUE) {
             return grid[set][time][solver];
@@ -68,7 +56,7 @@ public class Main {
         
         // calculate the best we can do
         int best = 0;
-        int bestIfSove = 0;
+        
         // can you solve a problem with the remaining set?
         for (int i = 0; i < n; ++i) {
             // best problem for you to solve
@@ -77,13 +65,12 @@ public class Main {
                     // you can solve your best problem left
                     int solveTime = probs[solver][i].time;
                     int setWithoutProblem = set & ~(1 << probs[solver][i].id);
-                    bestIfSove = Math.max(0, Math.max(recursiveDP(setWithoutProblem, time - solveTime, (solver + 1) % PEOPLE), recursiveDP(setWithoutProblem, time - solveTime, (solver + 2) % PEOPLE))) + 1;
+                    best = Math.max(0, Math.max(recursiveDP(setWithoutProblem, time - solveTime, (solver + 1) % PEOPLE), recursiveDP(setWithoutProblem, time - solveTime, (solver + 2) % PEOPLE))) + 1;
                     break;
                 }
             }
         }
         
-        best = bestIfSove;
         // save in memo table
         grid[set][time][solver] = best;
         
